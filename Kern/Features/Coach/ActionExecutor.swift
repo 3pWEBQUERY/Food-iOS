@@ -287,6 +287,11 @@ struct ActionExecutor {
             return
         }
         guard let destination = p[CoachParam.destination] else { return }
+        if destination == "workoutSession", let id = UUID(uuidString: p[CoachParam.sessionID] ?? "") {
+            dismiss()
+            router.open(.workoutSession(id: id))
+            return
+        }
         if destination.hasPrefix("foodSearch") {
             let meal = MealType(rawValue: String(destination.dropFirst("foodSearch.".count))) ?? .suggested()
             router.present(.foodSearch(meal: meal, day: .now))
@@ -358,6 +363,7 @@ enum CoachDestinations {
         case "gymProfiles": "Studio-Profile"
         case "planGenerator": "Trainingsplan erstellen"
         case "auditLog": "Änderungsprotokoll"
+        case "workoutSession": "Trainingseinheit"
         case "tab.today": "Heute"
         case "tab.nutrition": "Ernährung"
         case "tab.training": "Training"
