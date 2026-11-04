@@ -128,8 +128,8 @@ final class WorkoutStore {
         return log
     }
 
-    /// Ersetzt eine Übung (z. B. Gerät belegt). Bereits erledigte Sätze bleiben bei der alten Übung nicht erhalten,
-    /// deshalb wird nur getauscht, solange noch kein Satz abgeschlossen ist – sonst wird eine neue Übung angehängt.
+    /// Ersetzt eine Übung (z. B. Gerät belegt). Ohne erledigte Sätze wird die Übung direkt getauscht.
+    /// Sind bereits Sätze erledigt, bleiben diese erhalten und die neue Übung wird direkt danach eingefügt.
     func swap(_ log: ExerciseLog, to exercise: Exercise, in session: WorkoutSession, in context: ModelContext) {
         if log.sets.contains(where: \.isCompleted) {
             let remaining = max(1, log.sets.filter { !$0.isCompleted && $0.kind != .warmup }.count)
