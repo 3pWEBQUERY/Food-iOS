@@ -14,7 +14,7 @@ struct ExerciseDetailView: View {
     @Query private var allExercises: [Exercise]
     @Query private var allEquipment: [Equipment]
 
-    @State private var variant: String = WorkoutVariant.none
+    @State private var variant: String = WorkoutVariant.unassigned
     @State private var showEquipmentEditor = false
     @State private var showDelete = false
 
@@ -36,14 +36,14 @@ struct ExerciseDetailView: View {
     private var variants: [(key: String, label: String)] {
         var seen: [String: String] = [:]
         for log in completedLogs {
-            let key = log.equipmentID ?? WorkoutVariant.none
+            let key = log.equipmentID ?? WorkoutVariant.unassigned
             seen[key] = log.equipmentLabel ?? "Ohne bestimmtes Gerät"
         }
         return seen.map { (key: $0.key, label: $0.value) }.sorted { $0.label < $1.label }
     }
 
     private var variantLogs: [ExerciseLog] {
-        completedLogs.filter { ($0.equipmentID ?? WorkoutVariant.none) == variant }
+        completedLogs.filter { ($0.equipmentID ?? WorkoutVariant.unassigned) == variant }
     }
 
     var body: some View {
@@ -93,7 +93,7 @@ struct ExerciseDetailView: View {
         }
         .onAppear {
             if !variants.contains(where: { $0.key == variant }), let last = completedLogs.last {
-                variant = last.equipmentID ?? WorkoutVariant.none
+                variant = last.equipmentID ?? WorkoutVariant.unassigned
             }
         }
     }
@@ -302,5 +302,5 @@ struct ExerciseDetailView: View {
 }
 
 enum WorkoutVariant {
-    static let none = "__none__"
+    static let unassigned = "__none__"
 }

@@ -127,13 +127,13 @@ enum PlanGenerator {
     // MARK: Generierung
 
     static func generate(options: TrainingPlanOptions, exercises: [Exercise]) -> TrainingPlanDraft {
-        let split = split(for: options.daysPerWeek, experience: options.experience, focus: options.focus)
-        let blueprints = blueprints(for: split)
+        let chosenSplit = PlanGenerator.split(for: options.daysPerWeek, experience: options.experience, focus: options.focus)
+        let dayBlueprints = PlanGenerator.blueprints(for: chosenSplit)
         let perDay = exerciseCount(for: options.sessionMinutes)
 
         var usedAcrossPlan: [String: Int] = [:]
         var days: [TrainingPlanDraftDay] = []
-        for blueprint in blueprints {
+        for blueprint in dayBlueprints {
             var slots = blueprint.slots
             if slots.count < perDay {
                 let extras: [Slot] = [Slot(pattern: .core), Slot(pattern: .calves), Slot(pattern: .rearDelt), Slot(pattern: .core, variant: 1)]
@@ -171,14 +171,14 @@ enum PlanGenerator {
         }
         let weeklySets = volume.sorted { $0.value > $1.value }.map { (muscle: $0.key, sets: $0.value) }
 
-        let rationale = makeRationale(split: split, options: options, days: days, weeklySets: weeklySets)
+        let rationale = makeRationale(split: chosenSplit, options: options, days: days, weeklySets: weeklySets)
         let name: String = switch options.focus {
-        case .strength: "Kraftplan · \(split.title)"
-        case .hypertrophy: "Muskelaufbau · \(split.title)"
-        case .endurance: "Kraftausdauer · \(split.title)"
-        case .mobility: "Mobilität & Kraft · \(split.title)"
+        case .strength: "Kraftplan · \(chosenSplit.title)"
+        case .hypertrophy: "Muskelaufbau · \(chosenSplit.title)"
+        case .endurance: "Kraftausdauer · \(chosenSplit.title)"
+        case .mobility: "Mobilität & Kraft · \(chosenSplit.title)"
         }
-        return TrainingPlanDraft(name: name, split: split, options: options, days: days, rationale: rationale, weeklySets: weeklySets)
+        return TrainingPlanDraft(name: name, split: chosenSplit, options: options, days: days, rationale: rationale, weeklySets: weeklySets)
     }
 
     private static func blueprints(for split: TrainingSplit) -> [DayBlueprint] {

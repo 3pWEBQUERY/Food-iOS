@@ -269,7 +269,7 @@ private struct CycleDayCell: View {
     let isPredicted: Bool
 
     private var flowOpacity: Double {
-        switch entry?.flow ?? .none {
+        switch entry?.flow ?? CycleFlow.none {
         case .light: 0.35
         case .medium: 0.6
         case .heavy: 0.9
@@ -312,7 +312,7 @@ private struct CycleDayCell: View {
 
     private var accessibilityText: String {
         var parts = [Fmt.mediumDate(date)]
-        if let entry, entry.flow != .none { parts.append("Blutung \(entry.flow.title)") }
+        if let entry, entry.flow != CycleFlow.none { parts.append("Blutung \(entry.flow.title)") }
         if isPredicted { parts.append("geschätzte Periode") }
         if let entry, !entry.symptoms.isEmpty { parts.append(entry.symptoms.map(\.title).joined(separator: ", ")) }
         return parts.joined(separator: ", ")

@@ -167,9 +167,9 @@ private struct ProgressPhotosContent: View {
                 detailPhoto = photo
             }
         } label: {
-            ProgressPhotoImage(data: photo.imageData)
-                .frame(minHeight: 140)
-                .aspectRatio(3 / 4, contentMode: .fill)
+            Color.clear
+                .aspectRatio(3 / 4, contentMode: .fit)
+                .overlay { ProgressPhotoImage(data: photo.imageData) }
                 .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.small, style: .continuous))
                 .overlay(alignment: .topLeading) {
                     Badge(text: photo.pose.title, tint: .white)

@@ -340,14 +340,17 @@ struct TrainingSetBadge: View {
     let set: SetLog
     let workingIndex: Int
 
-    var body: some View {
-        let label = set.kind == .working ? "\(workingIndex)" : set.kind.shortLabel
-        let tint: Color = switch set.kind {
+    private var tint: Color {
+        switch set.kind {
         case .warmup: .secondary
         case .working: .primary
         case .drop: Theme.training
         case .failure: Theme.warning
         }
+    }
+
+    var body: some View {
+        let label = set.kind == .working ? "\(workingIndex)" : set.kind.shortLabel
         Text(label)
             .font(.footnote.weight(.semibold).monospacedDigit())
             .foregroundStyle(set.isCompleted ? Color.white : tint)

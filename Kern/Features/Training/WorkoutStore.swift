@@ -13,12 +13,12 @@ final class WorkoutStore {
     private static let restDurationKey = "kern.workout.restDuration"
     private static let restNotificationID = "kern.workout.rest"
 
-    var activeSessionID: UUID? {
+    var activeSessionID: UUID? = nil {
         didSet { UserDefaults.standard.set(activeSessionID?.uuidString, forKey: Self.activeKey) }
     }
 
     /// Ende des laufenden Pausentimers (nil = keine Pause).
-    var restEndsAt: Date? {
+    var restEndsAt: Date? = nil {
         didSet {
             if let restEndsAt {
                 UserDefaults.standard.set(restEndsAt.timeIntervalSince1970, forKey: Self.restEndKey)
