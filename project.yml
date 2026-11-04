@@ -1,0 +1,58 @@
+# Fallback: Projekt mit XcodeGen neu erzeugen (`xcodegen generate`).
+# Das mitgelieferte Kern.xcodeproj nutzt synchronisierte Ordner (Xcode 16+), daher
+# ist dieser Schritt normalerweise nicht nötig.
+name: Kern
+options:
+  bundleIdPrefix: ch.kernapp
+  deploymentTarget:
+    iOS: "26.0"
+  developmentLanguage: de
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    IPHONEOS_DEPLOYMENT_TARGET: "26.0"
+targets:
+  Kern:
+    type: application
+    platform: iOS
+    sources:
+      - Kern
+      - Shared
+    dependencies:
+      - target: KernWidgetsExtension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ch.kernapp.ios
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_FILE: Config/Kern-Info.plist
+        CODE_SIGN_ENTITLEMENTS: Config/Kern.entitlements
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        TARGETED_DEVICE_FAMILY: "1,2"
+        MARKETING_VERSION: "1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        INFOPLIST_KEY_CFBundleDisplayName: Kern
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: UIInterfaceOrientationPortrait
+        INFOPLIST_KEY_NSCameraUsageDescription: Kern nutzt die Kamera zum Scannen von Barcodes, für Fotos von Mahlzeiten und Etiketten sowie für private Fortschrittsfotos.
+        INFOPLIST_KEY_NSMicrophoneUsageDescription: Kern nutzt das Mikrofon für Spracheingaben an den Coach.
+        INFOPLIST_KEY_NSSpeechRecognitionUsageDescription: Kern wandelt deine Spracheingaben in Text um, damit der Coach Einträge vorbereiten kann.
+        INFOPLIST_KEY_NSHealthShareUsageDescription: Kern liest Gewicht, Schritte, Aktivität und Trainings aus Apple Health, um deinen Fortschritt vollständig darzustellen.
+        INFOPLIST_KEY_NSHealthUpdateUsageDescription: Kern schreibt Gewicht, Ernährung, Wasser und Trainings nach Apple Health, wenn du das erlaubst.
+        INFOPLIST_KEY_NSPhotoLibraryUsageDescription: Kern nutzt ausgewählte Fotos für Mahlzeiten, Etiketten und Fortschrittsfotos.
+        INFOPLIST_KEY_NSFaceIDUsageDescription: Kern schützt sensible Bereiche wie Zyklusdaten und Fortschrittsfotos mit Face ID.
+  KernWidgetsExtension:
+    type: app-extension
+    platform: iOS
+    sources:
+      - KernWidgets
+      - Shared
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ch.kernapp.ios.widgets
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_FILE: Config/KernWidgets-Info.plist
+        CODE_SIGN_ENTITLEMENTS: Config/KernWidgets.entitlements
+        INFOPLIST_KEY_CFBundleDisplayName: Kern Widgets
+        SKIP_INSTALL: YES
