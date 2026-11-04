@@ -158,7 +158,7 @@ private struct SettingsProfileForm: View {
 
     var body: some View {
         Form {
-            Section("Basisdaten") {
+            Section {
                 TextField("Name", text: $profile.displayName)
                     .textContentType(.name)
                 Toggle("Geburtsdatum angeben", isOn: hasBirthDate)
@@ -168,6 +168,8 @@ private struct SettingsProfileForm: View {
                 SettingsValueRow(title: "Körpergrösse", value: heightBinding, unit: "cm", digits: 0)
                 SettingsValueRow(title: "Startgewicht", value: startWeightBinding, unit: prefs.weightUnit.symbol)
                 NumberField(title: "Körperfettanteil", value: $profile.bodyFatPercent, unit: "%")
+            } header: {
+                Text("Basisdaten")
             } footer: {
                 Text("Der Körperfettanteil ist freiwillig. Ist er bekannt, kann Kern genauere Formeln verwenden.")
             }
