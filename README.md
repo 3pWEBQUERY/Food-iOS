@@ -52,6 +52,16 @@ Siehe [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 - **KI hinter Protokollen:** Der Coach arbeitet lokal regelbasiert; ist ein Backend konfiguriert und die
   Zustimmung erteilt, wird eine austauschbare serverseitige KI genutzt. Jede KI-Aktion wird lokal validiert.
 
+## Stand & bekannte Einschränkungen
+
+- Der Code wurde ohne Xcode erstellt und nur syntaktisch geprüft – beim ersten Build in Xcode 26
+  können einzelne Typfehler auftreten, die sich schnell beheben lassen.
+- Der KI-Coach arbeitet ohne Backend lokal und regelbasiert; Foto- und Etiketterkennung auf dem Gerät
+  sind grob und immer als Schätzung markiert.
+- Lebensmittel-Basisdaten sind generische Referenzwerte; Markenprodukte kommen live über Open Food Facts.
+- Progressionsvorschläge und Deload-Status liegen in UserDefaults (noch nicht synchronisierbar).
+- Der 3D-Körper ist eine illustrative SceneKit-Figur aus Grundformen, keine Körpervermessung.
+
 ## Nächste Schritte (ausserhalb dieser iOS-App)
 
 - Backend (modularer API-Service auf Railway, PostgreSQL, Railway Bucket) gemäss Schnittstellen in `docs/ARCHITECTURE.md`

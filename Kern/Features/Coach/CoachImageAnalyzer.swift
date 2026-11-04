@@ -29,7 +29,7 @@ struct CoachImageAnalysis: Hashable {
 enum CoachImageAnalyzer {
     static func analyze(_ data: Data) async -> CoachImageAnalysis {
         await Task.detached(priority: .userInitiated) {
-            runAnalysis(data)
+            CoachImageAnalyzer.runAnalysis(data)
         }.value
     }
 
