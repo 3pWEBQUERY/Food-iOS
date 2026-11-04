@@ -172,7 +172,7 @@ struct FoodSearchView: View {
             Section {
                 ForEach(habitFoods) { foodRow($0) }
             } header: {
-                Text("Oft zum \(meal.title)")
+                Text("Häufig bei \(meal.title)")
             } footer: {
                 Text("Vorschläge basierend auf deinen bisherigen Einträgen.")
             }
